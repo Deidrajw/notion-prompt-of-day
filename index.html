@@ -1,76 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prompt of the Day</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            text-align: center;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .prompt {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        .date {
-            font-size: 18px;
-            color: #888;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal Prompt of the Day</title>
+  <style>
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 600px;
+    }
+    h1 {
+      text-align: center;
+    }
+    #prompt {
+      font-size: 1.2em;
+      line-height: 1.6em;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="prompt" id="prompt"></div>
-        <div class="date" id="date"></div>
-    </div>
 
-    <script>
-        const prompts = [
-            "What is something you're grateful for today?",
-            "What are your top three goals for the week?",
-            "What did you learn yesterday that you want to carry forward?",
-            "How are you taking care of your mind and body today?",
-            "What is one thing you're looking forward to this week?",
-            // Add more prompts here up to 121
-        ];
+<div class="container">
+  <h1>Prompt of the Day</h1>
+  <div id="prompt"></div>
+</div>
 
-        function getPromptOfTheDay() {
-            const today = new Date();
-            const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);  // Get the day of the year
-            const promptIndex = dayOfYear % prompts.length; // Ensure the prompt repeats after the last one
-            return prompts[promptIndex];
-        }
+<script>
+// Array of journal prompts
+const prompts = [
+  "What are my unique qualities and strengths, and how can I embrace and celebrate them more fully?",
+  "What are three things I accomplished this week that I am proud of?",
+  "How can I be kinder to myself today?",
+  "What are my unique strengths and how have they helped me in the past?",
+  "What is one negative thought I have about myself that I can challenge with a positive thought?",
+  "What can I do to take care of myself physically and emotionally today?",
+  "What are three things I love about myself?",
+  "How have I grown and changed as a person in the past year?",
+  "What is a positive affirmation I can repeat to myself throughout the day?",
+  "What is one small step I can take today to work towards a personal goal or dream?",
+  "When was the last time I felt inspired?",
+  "Where do I usually find inspiration?",
+  "What things inspire me?",
+  "Who is someone that inspires me, and what qualities do they possess that I admire?",
+  "What is one book or movie that has inspired me, and why?",
+  "What are some of my favorite forms of art, literature, or media, and how can they inspire me?",
+  "What is one quote or saying that inspires me, and how can I apply its wisdom to my life?",
+  "What is one creative project that I have been wanting to work on, and what steps can I take to get started?",
+  "When was the last time I felt completely in awe of something, and what was it that inspired that feeling?",
+  "What is one thing that I have always wanted to learn, and how can I make time to pursue this interest?",
+  "What is one small thing that I can do each day to cultivate a greater sense of inspiration and creativity in my life?",
+  "What if I could travel back in time to any moment in history? Where would I go, and what would I do?",
+  "What if I had the power to fly? How would I use this ability, and where would I go?",
+  "What if I could live anywhere in the world? Where would I choose, and why?",
+  "What if I won the lottery? How would my life change, and what would I do with the money?",
+  "What if I could switch places with someone for a day? Who would I choose, and what would I do in their shoes?",
+  "What if I could meet any famous person, living or dead? Who would I choose, and what would I ask them?",
+  "What if I could speak any language fluently? Which language would I choose, and what would I do with this skill?",
+  "What if I could relive any day from my past? Which day would I choose, and what would I do differently?",
+  "What if I could talk to any animal? Which animal would I choose, and what would I ask them?",
+  "What if I had made a different pivotal decision in my past? Which decision would have changed the course of my life?",
+  "What memories do I have from my childhood? Are there any happy memories that stand out?",
+  "What was my favorite activity as a child? Did I have any hobbies or interests that I loved?",
+  "How did I spend my free time as a child? What games did I play? What books did I read?",
+  "What did I enjoy most about school? Did I have a favorite subject or teacher?",
+  "Did I have any dreams or aspirations as a child? What did I want to be when I grew up?",
+  "What were some of the challenges or struggles I faced as a child? How did those experiences shape me?",
+  "How did my family and upbringing impact my childhood experiences? What positive or negative influences did I have?",
+  "What beliefs or attitudes did I develop as a child that may still be impacting me today?",
+  "How can I nurture and care for my inner child now? What activities or experiences bring me joy and playfulness?",
+  "What can I learn from my inner child? How can I tap into the curiosity, creativity, and resilience that I had as a child?",
+  "What activities or experiences brought me joy as a child?",
+  "How can I incorporate these activities into my life now?",
+  "How can I nurture my inner child and cultivate a sense of playfulness and wonder?",
+  "What is something silly that always makes me laugh?",
+  "What is a favorite childhood memory that still brings me joy?",
+  "If I could live in any time period or place, where would I choose and why?",
+  "What is my favorite meal or type of food, and why do I love it so much?",
+  "If I could have any superpower, what would it be and why?",
+  "What is a book or movie that always puts me in a good mood, and why?",
+  "What is something Iâ€™ve always wanted to try but havenâ€™t yet? How might I make that happen?",
+  "What is one thing I canâ€™t live without?",
+  "What is one funny story about my life that I donâ€™t mind sharing with other people?",
+  "What is something about myself that I know is quirky?",
+  "If I could be any fictional character, who would I choose and why?",
+  "What is the most outrageous outfit or costume Iâ€™ve ever worn? Where did I wear it, and how did I feel?",
+  "What is my favorite silly joke or pun, and why does it make me laugh?",
+  "What is the best gift I have ever given, and why was it so special?",
+  "If I were a superhero, what would be my name, powers, and costume?",
+  "What is the funniest prank I have ever played on someone, or that someone has played on me?",
+  "If I could magically switch lives with anyone for a day, who would it be and why?",
+  "What is my favorite childhood toy or game, and why did I love it so much?",
+  "What is my favorite dance move, and can I teach it to someone else (or describe it in words)?",
+  "If I could travel anywhere in the world (or beyond), where would I go and what would I do there?",
+  "What is happening in this present moment?",
+  "What are five things I can see right now, and what colors, shapes, and textures do they have?",
+  "If my mind was like the ocean right now, what is the water like?",
+  "What thoughts am I observing right now?",
+  "What sensory information am I getting in this present moment?",
+  "What are three things I can hear right now, and how do they sound?",
+  "What are three things I can feel physically right now, such as the weight of my body on a chair or the texture of my clothing?",
+  "What are three things I can smell right now, and how do they smell?",
+  "What are three things I can taste right now, and how do they taste?",
+  "What emotions am I feeling right now, and how can I practice acceptance and self-compassion towards them?",
+  "What thoughts are running through my mind right now, and how can I acknowledge them without getting caught up in them?",
+  "What are three things I am looking forward to in the next hour, and how can I stay present and open to experiencing them fully?",
+  "What are three things that are worrying me right now, and how can I practice mindfulness to reduce my stress and anxiety?",
+  "What are three small actions I can take right now to bring myself into the present moment, such as taking a deep breath, stretching, or savoring a sip of tea or coffee?",
+  "How will people travel in the future?",
+  "Are you more like your mom or your dad?",
+  "How would you describe love?",
+  "Write a story about a princess and a magical bicycle.",
+  "Write a story about someone who overcomes a fear.",
+  "Write a rhyming poem about poems.",
+  "If you got trapped at the zoo, what would you do?",
+  "What would it be like to go skydiving? Would you ever try it?",
+  "Why are you lucky to have an imagination?",
+  "What does it mean to be successful?",
+  "If you could make up a sport, how would it be played?",
+  "What is your favorite thing about your family?",
+  "Describe your grandparentsâ€™ house.",
+  "What is the best dessert in the world?",
+  "How does it feel when someone shares a secret with you?",
+  "Write a funny story about an alien abduction.",
+  "Are there any foods that you absolutely will not eat? Why?",
+  "What are you looking forward to doing in high school?",
+  "Who is your favorite singer? Why do you like him or her?",
+  "Write a poem about your favorite flower.",
+  "What are three things that make you unique?",
+  "What is the best lesson youâ€™ve ever learned outside of school?",
+  "How do you feel when you hear stories about people living in poor countries?",
+  "What is your favorite kind of animal?",
+  "Do you believe in ghosts?",
+  "How do you feel when you laugh?",
+  "Write a short story about a dog and cat who are best friends.",
+  "If you had three wishes, what would you choose?",
+  "What do you think the clouds are made of?",
+  "Write about a time when you were embarrassed until someone made you feel better.",
+  "How does it feel to miss someone or something?",
+  "Write about the best party youâ€™ve ever been to.",
+  "What is life all about?",
+  "If you could visit any single new city in the world, where would you go?",
+  "What is your favorite household chore?",
+  "Would you rather visit a mountain or a beach?",
+  "Write about a secret that youâ€™ve never shared.",
+  "What is the best feeling in the world?",
+  "What is the worst feeling in the world?",
+  "If you could take any three celebrities to lunch, who would you choose? Where would you eat?",
+  "What is something that you always have with you?",
+  "Who do you trust more than anyone else?",
+  "Is love or hate stronger?"
+];
 
-        function updatePage() {
-            const today = new Date();
-            const promptElement = document.getElementById("prompt");
-            const dateElement = document.getElementById("date");
+// Function to get today's prompt
+function getPromptOfTheDay() {
+  const date = new Date();
+  const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+  const promptIndex = dayOfYear % prompts.length; // Cycle through prompts based on the day of the year
+  document.getElementById('prompt').innerText = prompts[promptIndex];
+}
 
-            promptElement.textContent = getPromptOfTheDay();
-            dateElement.textContent = `Today's date: ${today.toDateString()}`;
-        }
+// Run the function to show the prompt on page load
+getPromptOfTheDay();
+</script>
 
-        setInterval(updatePage, 1000); // Updates every second to check for midnight, but you can optimize this to trigger only at midnight
-        updatePage(); // Call once when the page loads
-    </script>
 </body>
 </html>
