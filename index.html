@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt of the Day</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .prompt {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .date {
+            font-size: 18px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="prompt" id="prompt"></div>
+        <div class="date" id="date"></div>
+    </div>
+
+    <script>
+        const prompts = [
+            "What is something you're grateful for today?",
+            "What are your top three goals for the week?",
+            "What did you learn yesterday that you want to carry forward?",
+            "How are you taking care of your mind and body today?",
+            "What is one thing you're looking forward to this week?",
+            // Add more prompts here up to 121
+        ];
+
+        function getPromptOfTheDay() {
+            const today = new Date();
+            const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);  // Get the day of the year
+            const promptIndex = dayOfYear % prompts.length; // Ensure the prompt repeats after the last one
+            return prompts[promptIndex];
+        }
+
+        function updatePage() {
+            const today = new Date();
+            const promptElement = document.getElementById("prompt");
+            const dateElement = document.getElementById("date");
+
+            promptElement.textContent = getPromptOfTheDay();
+            dateElement.textContent = `Today's date: ${today.toDateString()}`;
+        }
+
+        setInterval(updatePage, 1000); // Updates every second to check for midnight, but you can optimize this to trigger only at midnight
+        updatePage(); // Call once when the page loads
+    </script>
+</body>
+</html>
